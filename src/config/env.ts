@@ -1,7 +1,12 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-const requiredEnv: string[] = ["MONGO_URI", "PORT", "FRONTEND_URL"];
+const requiredEnv: string[] = [
+  "MONGO_URI",
+  "PORT",
+  "JWT_SECRET",
+  "FRONTEND_URL",
+];
 
 let envVars: Record<string, string> = {};
 
