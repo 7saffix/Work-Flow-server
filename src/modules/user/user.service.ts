@@ -8,9 +8,9 @@ const createUser = async (payload: IUser) => {
 
   const userExist = await User.findOne({ email });
 
-  if (userExist) {
-    throw new AppError(409, "Email already exist");
-  }
+  // if (userExist) {
+  //   throw new AppError(409, "Email already exist");
+  // }
 
   const hashPassword = await bcrypt.hash(password as string, 10);
 
