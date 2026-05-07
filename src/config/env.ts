@@ -4,7 +4,10 @@ dotenv.config();
 const requiredEnv: string[] = [
   "MONGO_URI",
   "PORT",
-  "JWT_SECRET",
+  "JWT_ACCESS_SECRET",
+  "JWT_REFRESH_SECRET",
+  "JWT_ACCESS_EXPIRES",
+  "JWT_REFRESH_EXPIRES",
   "FRONTEND_URL",
 ];
 

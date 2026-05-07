@@ -1,8 +1,20 @@
 import { Response } from "express";
+interface IToken {
+  accessToken?: string;
+  refreshToken?: string;
+}
 
-export const setCookies = (res: Response, token: string) => {
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: false,
-  });
+export const setCookies = (res: Response, token: IToken) => {
+  if (token.accessToken) {
+    res.cookie("accessToken", token.accessToken, {
+      httpOnly: true,
+      secure: false,
+    });
+  }
+  if (token.refreshToken) {
+    res.cookie("refreshToken", token.refreshToken, {
+      httpOnly: true,
+      secure: false,
+    });
+  }
 };

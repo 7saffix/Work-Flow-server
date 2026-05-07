@@ -7,6 +7,7 @@ import { setCookies } from "../../utils/setCookie";
 const login = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const result = await authService.login(req.body);
+
     setCookies(res, result.token);
 
     sendResponse(res, {
@@ -18,4 +19,20 @@ const login = catchAsync(
   },
 );
 
-export const authController = { login };
+const createNewAccessToken = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const refreshToken = req.cookies.refreshToken;
+
+    const result = await authService.createNewAccessToken(refreshToken);
+    setCookies(res, result);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: 200,
+      message: "generate new accessToken successfully",
+      data: result,
+    });
+  },
+);
+
+export const authController = { login, createNewAccessToken };
