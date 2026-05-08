@@ -15,7 +15,6 @@ const globalErrorHandler = (
     statusCode = error.statusCode;
     message = error.message;
   } else if (error instanceof ZodError) {
-    console.log(error.issues[0]);
     statusCode = 400;
     message = error.issues[0].message;
   } else if (error.name == "ValidationError") {
