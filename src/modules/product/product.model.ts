@@ -27,6 +27,18 @@ const productSchema = new Schema<IProduct>(
       trim: true,
       unique: true,
     },
+    purchasePrice: {
+      type: Number,
+      required: true,
+    },
+    sellingPrice: {
+      type: Number,
+      required: true,
+    },
+    stock: {
+      type: Number,
+      required: true,
+    },
 
     description: {
       type: String,
