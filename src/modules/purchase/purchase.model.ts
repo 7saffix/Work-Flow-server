@@ -13,6 +13,11 @@ const purchaseSchema = new Schema<IPurchase>(
       ref: "Product",
       required: true,
     },
+    supplier: {
+      type: Schema.Types.ObjectId,
+      ref: "Supplier",
+      required: true,
+    },
     quantity: { type: Number, required: true },
     unitPrice: { type: Number, required: true },
 

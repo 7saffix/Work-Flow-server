@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const createPurchaseZodSchema = z.object({
   product: z.string({ error: "Product is required" }),
+  supplier: z.string({ error: "Supplier is required" }),
   quantity: z.number().min(1),
   unitPrice: z.number().min(0),
 
