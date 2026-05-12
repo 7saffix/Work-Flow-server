@@ -9,6 +9,8 @@ import { ProductRoutes } from "../modules/product/product.route";
 import { PurchaseRoutes } from "../modules/purchase/purchase.route";
 import { SellRoutes } from "../modules/sell/sell.route";
 import { ReturnRoutes } from "../modules/return/return.route";
+import { ReportRoutes } from "../modules/report/report.route";
+import { CustomerRoutes } from "../modules/customer/customer.route";
 
 export const router = Router();
 
@@ -34,7 +36,7 @@ const moduleRoutes = [
     path: "/supplier",
   },
   {
-    route: SupplierRoutes,
+    route: CustomerRoutes,
     path: "/customer",
   },
   {
@@ -56,6 +58,10 @@ const moduleRoutes = [
   {
     route: ReturnRoutes,
     path: "/return",
+  },
+  {
+    route: ReportRoutes,
+    path: "/report",
   },
 ];
 

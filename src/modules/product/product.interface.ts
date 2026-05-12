@@ -7,8 +7,8 @@ export interface IProduct {
 
   name: string;
   purchasePrice: number;
-  sellingPrice: Number;
-  stock: Number;
+  sellingPrice: number;
+  stock: number;
 
   description?: string;
   isActive?: boolean;
