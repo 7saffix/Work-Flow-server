@@ -9,6 +9,7 @@ const createSell = async (payload: any, userId: string) => {
     session.startTransaction();
     const { product, customer, quantity, vat, discount, shippingCost } =
       payload;
+    console.log(payload);
 
     const productExist = await Product.findById(product);
     if (!productExist) throw new AppError(404, "product not found");
@@ -16,7 +17,10 @@ const createSell = async (payload: any, userId: string) => {
     if (productExist.stock < quantity) {
       throw new AppError(400, "Insufficient stock");
     }
-    const basePrice = quantity * productExist.sellingPrice;
+    const unitPrice = Number(productExist.sellingPrice);
+    console.log(unitPrice);
+
+    const basePrice = quantity * unitPrice;
 
     const totalPrice = basePrice + vat + shippingCost - discount;
 
@@ -27,7 +31,7 @@ const createSell = async (payload: any, userId: string) => {
           product,
           customer,
           quantity,
-          unitPrice: productExist.sellingPrice,
+          unitPrice,
           vat,
           discount,
           shippingCost,
