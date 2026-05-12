@@ -1,33 +1,59 @@
+import mongoose from "mongoose";
 import { Sell } from "./sell.model";
+import { Product } from "../product/product.model";
+import AppError from "../../errorHelper/AppError";
 
 const createSell = async (payload: any, userId: string) => {
-  const {
-    product,
-    customer,
-    quantity,
-    unitPrice,
-    vat,
-    discount,
-    shippingCost,
-  } = payload;
+  const session = await mongoose.startSession();
+  try {
+    session.startTransaction();
+    const { product, customer, quantity, vat, discount, shippingCost } =
+      payload;
 
-  const basePrice = quantity * unitPrice;
+    const productExist = await Product.findById(product);
+    if (!productExist) throw new AppError(404, "product not found");
 
-  const totalPrice = basePrice + vat + shippingCost - discount;
+    if (productExist.stock < quantity) {
+      throw new AppError(400, "Insufficient stock");
+    }
+    const basePrice = quantity * productExist.sellingPrice;
 
-  const result = await Sell.create({
-    user: userId,
-    product,
-    customer,
-    quantity,
-    unitPrice,
-    vat,
-    discount,
-    shippingCost,
-    totalPrice,
-  });
+    const totalPrice = basePrice + vat + shippingCost - discount;
 
-  return result;
+    const result = await Sell.create(
+      [
+        {
+          user: userId,
+          product,
+          customer,
+          quantity,
+          unitPrice: productExist.sellingPrice,
+          vat,
+          discount,
+          shippingCost,
+          totalPrice,
+        },
+      ],
+      { session },
+    );
+
+    await Product.findByIdAndUpdate(
+      product,
+      {
+        $inc: { stock: -quantity },
+      },
+      { session },
+    );
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return result;
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    throw error;
+  }
 };
 
 const getMyAllSells = async (userId: string) => {
