@@ -18,12 +18,16 @@ const ReturnSchema = new Schema<IReturn>(
       ref: "Product",
       required: true,
     },
+    sell: {
+      type: Schema.Types.ObjectId,
+      ref: "Sell",
+      required: true,
+    },
     quantity: { type: Number, required: true },
     unitPrice: { type: Number, required: true },
 
     vat: { type: Number, default: 0 },
     discount: { type: Number, default: 0 },
-    shippingCost: { type: Number, default: 0 },
 
     totalPrice: { type: Number, required: true },
   },
