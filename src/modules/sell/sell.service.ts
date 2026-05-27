@@ -61,7 +61,10 @@ const createSell = async (payload: any, userId: string) => {
 };
 
 const getMyAllSells = async (userId: string) => {
-  return await Sell.find({ user: userId }).populate("product", "name price");
+  return await Sell.find({ user: userId }).populate(
+    "product customer",
+    "name price",
+  );
 };
 
 export const SellService = {

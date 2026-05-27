@@ -21,5 +21,14 @@ const createUser = async (payload: IUser) => {
   });
   return user;
 };
+const getProfile = async (id: string) => {
+  const user = await User.findById(id);
 
-export const userService = { createUser };
+  if (!user) {
+    throw new AppError(409, "User does not exist");
+  }
+
+  return user;
+};
+
+export const userService = { createUser, getProfile };

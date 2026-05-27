@@ -3,6 +3,11 @@ import { ISupplier } from "./supplier.interface";
 import { Supplier } from "./supplier.model";
 
 const createSupplier = async (userId: string, payload: ISupplier) => {
+  const isExist = await Supplier.findOne({ name: payload.name });
+
+  if (isExist) {
+    throw new AppError(400, "Supplier already exists");
+  }
   const supplier = await Supplier.create({
     ...payload,
     user: userId,

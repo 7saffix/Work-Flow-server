@@ -8,16 +8,7 @@ const ReturnSchema = new Schema<IReturn>(
       ref: "User",
       required: true,
     },
-    product: {
-      type: Schema.Types.ObjectId,
-      ref: "Product",
-      required: true,
-    },
-    customer: {
-      type: Schema.Types.ObjectId,
-      ref: "Product",
-      required: true,
-    },
+
     sell: {
       type: Schema.Types.ObjectId,
       ref: "Sell",

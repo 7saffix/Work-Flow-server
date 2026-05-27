@@ -3,6 +3,11 @@ import { ICategory } from "./category.interface";
 import { Category } from "./category.model";
 
 const createCategory = async (payload: ICategory) => {
+  const isExist = await Category.findOne({ name: payload.name });
+
+  if (isExist) {
+    throw new AppError(400, "Category already exists");
+  }
   const result = await Category.create(payload);
   return result;
 };

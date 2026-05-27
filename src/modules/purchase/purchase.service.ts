@@ -73,7 +73,7 @@ const createPurchase = async (payload: any, userId: string) => {
 
 const getMyAllPurchases = async (userId: string) => {
   return await Purchase.find({ user: userId }).populate(
-    "product",
+    "product supplier",
     "name price",
   );
 };

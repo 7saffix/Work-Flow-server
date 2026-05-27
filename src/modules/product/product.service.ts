@@ -39,6 +39,8 @@ const getAllProducts = async (query: any) => {
       $options: "i",
     };
   }
+  const totalProduct = await Product.countDocuments();
+  const totalPages = Math.ceil(totalProduct / limit);
 
   const result = await Product.aggregate([
     { $match: matchStage },
@@ -69,6 +71,7 @@ const getAllProducts = async (query: any) => {
         purchasePrice: 1,
         sellingPrice: 1,
         stock: 1,
+        isActive: 1,
         category: "$category.name",
         brand: "$brand.name",
       },
@@ -79,7 +82,12 @@ const getAllProducts = async (query: any) => {
     { $limit: limit },
   ]);
 
-  return result;
+  return {
+    result,
+    meta: {
+      totalPages,
+    },
+  };
 };
 
 const updateProduct = async (id: string, payload: Partial<IProduct>) => {

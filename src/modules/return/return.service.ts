@@ -43,7 +43,7 @@ const createReturn = async (payload: any, userId: string) => {
     if (quantity > remainingQuantity) {
       throw new AppError(
         400,
-        `You can return maximum ${remainingQuantity} item(s)`,
+        `You already return ${alreadyReturned}.Now You can return maximum ${remainingQuantity} item(s)`,
       );
     }
 
@@ -61,19 +61,12 @@ const createReturn = async (payload: any, userId: string) => {
       [
         {
           user: userId,
-
           sell: sellExist._id,
 
-          product: sellExist.product,
-          customer: sellExist.customer,
-
           quantity,
-
           unitPrice,
-
           vat,
           discount,
-
           totalPrice,
         },
       ],
@@ -103,7 +96,19 @@ const createReturn = async (payload: any, userId: string) => {
 };
 
 const getMyAllReturn = async (userId: string) => {
-  return await Return.find({ user: userId }).populate("product", "name price");
+  return await Return.find({ user: userId }).populate({
+    path: "sell",
+    populate: [
+      {
+        path: "customer",
+        select: "name",
+      },
+      {
+        path: "product",
+        select: "name",
+      },
+    ],
+  });
 };
 
 export const ReturnService = {
