@@ -59,7 +59,6 @@ API LIVE LINK : https://work-flow-server-indol.vercel.app
 - Mongoose
 - Zod (Validation)
 - JWT Authentication
-- Swagger (API Documentation)
 
 ---
 
