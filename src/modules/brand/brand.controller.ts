@@ -21,7 +21,8 @@ const createBrand = catchAsync(
 
 const getAllBrands = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await BrandService.getAllBrands();
+    const userId = req.user.id;
+    const result = await BrandService.getAllBrands(userId);
 
     sendResponse(res, {
       success: true,

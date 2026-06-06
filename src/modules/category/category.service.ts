@@ -12,8 +12,8 @@ const createCategory = async (payload: ICategory) => {
   return result;
 };
 
-const getAllCategories = async () => {
-  return await Category.find();
+const getAllCategories = async (userId: string) => {
+  return await Category.find({ user: userId });
 };
 
 const updateCategory = async (id: string, payload: Partial<ICategory>) => {

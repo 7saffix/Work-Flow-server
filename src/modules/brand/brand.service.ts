@@ -11,8 +11,8 @@ const createBrand = async (payload: IBrand) => {
   return result;
 };
 
-const getAllBrands = async () => {
-  return await Brand.find({}, { brandName: 1, _id: 1 });
+const getAllBrands = async (userId: string) => {
+  return await Brand.find({ user: userId }, { brandName: 1, _id: 1 });
 };
 
 const updateBrand = async (id: string, payload: Partial<IBrand>) => {

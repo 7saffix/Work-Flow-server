@@ -19,7 +19,8 @@ const createSupplier = catchAsync(
 );
 
 const getAllSuppliers = catchAsync(async (req: Request, res: Response) => {
-  const result = await SupplierService.getAllSuppliers();
+  const userId = req.user.id;
+  const result = await SupplierService.getAllSuppliers(userId);
 
   sendResponse(res, {
     success: true,

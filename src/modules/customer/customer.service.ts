@@ -11,8 +11,8 @@ const createCustomer = async (userId: string, payload: ICustomer) => {
   return customer;
 };
 
-const getAllCustomers = async () => {
-  return await Customer.find().populate("user");
+const getAllCustomers = async (userId: string) => {
+  return await Customer.find({ user: userId }).populate("user");
 };
 
 const updateCustomer = async (id: string, payload: Partial<ICustomer>) => {

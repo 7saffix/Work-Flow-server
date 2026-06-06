@@ -1,6 +1,7 @@
 import AppError from "../../errorHelper/AppError";
 import { Product } from "./product.model";
 import { IProduct } from "./product.interface";
+import { Types } from "mongoose";
 
 const createProduct = async (userId: string, payload: Partial<IProduct>) => {
   const isExist = await Product.findOne({ name: payload.name });
@@ -17,7 +18,7 @@ const createProduct = async (userId: string, payload: Partial<IProduct>) => {
   return result;
 };
 
-const getAllProducts = async (query: any) => {
+const getAllProducts = async (userId: string, query: any) => {
   const page = Number(query.page) || 1;
   const limit = Number(query.limit) || 10;
   const skip = (page - 1) * limit;
@@ -28,7 +29,7 @@ const getAllProducts = async (query: any) => {
   const sort = query.sort || "createdAt";
   const order = query.order === "asc" ? 1 : -1;
 
-  const matchStage: any = {};
+  const matchStage: any = { user: new Types.ObjectId(userId) };
 
   if (category) matchStage.category = category;
   if (brand) matchStage.brand = brand;
@@ -39,7 +40,8 @@ const getAllProducts = async (query: any) => {
       $options: "i",
     };
   }
-  const totalProduct = await Product.countDocuments();
+  const totalProduct = await Product.countDocuments(matchStage);
+
   const totalPages = Math.ceil(totalProduct / limit);
 
   const result = await Product.aggregate([

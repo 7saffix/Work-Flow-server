@@ -12,7 +12,7 @@ router.post(
   zodValidation(createBrandZodSchema),
   BrandController.createBrand,
 );
-router.get("/", BrandController.getAllBrands);
+router.get("/", authCheck(), BrandController.getAllBrands);
 router.patch(
   "/:id",
   authCheck(),

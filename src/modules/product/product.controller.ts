@@ -20,7 +20,8 @@ const createProduct = catchAsync(
 
 const getAllProducts = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const result = await ProductService.getAllProducts(req.query);
+    const userId = req.user.id;
+    const result = await ProductService.getAllProducts(userId, req.query);
 
     sendResponse(res, {
       success: true,

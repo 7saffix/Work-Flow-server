@@ -16,8 +16,8 @@ const createSupplier = async (userId: string, payload: ISupplier) => {
   return supplier;
 };
 
-const getAllSuppliers = async () => {
-  return await Supplier.find().populate("user");
+const getAllSuppliers = async (userId: string) => {
+  return await Supplier.find({ user: userId }).populate("user");
 };
 
 const updateSupplier = async (id: string, payload: Partial<ISupplier>) => {

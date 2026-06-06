@@ -19,7 +19,8 @@ const createCustomer = catchAsync(
 );
 
 const getAllCustomers = catchAsync(async (req: Request, res: Response) => {
-  const result = await CustomerService.getAllCustomers();
+  const userId = req.user.id;
+  const result = await CustomerService.getAllCustomers(userId);
 
   sendResponse(res, {
     success: true,
